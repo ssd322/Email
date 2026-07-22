@@ -1,0 +1,47 @@
+<body>
+<!-- Fragment: sidebar -->
+<div th:fragment="sidebar(activePage)" class="sidebar d-flex flex-column p-3">
+    <a href="/dashboard" class="d-flex align-items-center mb-4 text-decoration-none sidebar-brand">
+        <i class="bi bi-envelope-paper-fill fs-3 me-2"></i>
+        <span class="fs-5 fw-bold">MailMarket</span>
+    </a>
+
+    <ul class="nav nav-pills flex-column mb-auto gap-1">
+        <li class="nav-item">
+            <a th:href="@{/dashboard}" class="nav-link sidebar-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/smtp}" class="nav-link sidebar-link" th:classappend="${activePage == 'smtp'} ? 'active' : ''">
+                <i class="bi bi-gear-fill me-2"></i> SMTP
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/upload-csv}" class="nav-link sidebar-link" th:classappend="${activePage == 'upload-csv'} ? 'active' : ''">
+                <i class="bi bi-file-earmark-spreadsheet-fill me-2"></i> Upload CSV
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/template}" class="nav-link sidebar-link" th:classappend="${activePage == 'template'} ? 'active' : ''">
+                <i class="bi bi-file-earmark-code-fill me-2"></i> Template
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/kirim-email}" class="nav-link sidebar-link" th:classappend="${activePage == 'kirim-email'} ? 'active' : ''">
+                <i class="bi bi-send-fill me-2"></i> Kirim Email
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/riwayat}" class="nav-link sidebar-link" th:classappend="${activePage == 'riwayat'} ? 'active' : ''">
+                <i class="bi bi-clock-history me-2"></i> Riwayat
+            </a>
+        </li>
+    </ul>
+
+    <hr>
+    <a th:href="@{/logout}" class="nav-link sidebar-link text-danger">
+        <i class="bi bi-box-arrow-right me-2"></i> Logout
+    </a>
+</div>
+</body>

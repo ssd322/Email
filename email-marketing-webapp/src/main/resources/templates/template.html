@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Template Email')}"></head>
+<body>
+
+<div class="app-wrapper">
+    <div th:replace="~{fragments/sidebar :: sidebar('template')}"></div>
+
+    <div class="main-content">
+        <div th:replace="~{fragments/navbar :: navbar('Template Email')}"></div>
+
+        <div class="container-fluid px-4">
+
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-1"></i> <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <form th:action="@{/template/save}" th:object="${emailTemplate}" method="post" id="templateForm">
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white fw-semibold">
+                                <i class="bi bi-pencil-square me-1"></i> Editor Template
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" th:field="*{subject}" id="subjectInput" class="form-control" required>
+                                    <div class="text-danger small" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Isi Email (HTML)
+                                        <small class="text-muted">— gunakan <code>{{nama}}</code> dan <code>{{email}}</code> untuk personalisasi</small>
+                                    </label>
+                                    <textarea th:field="*{htmlContent}" id="htmlContentInput" class="form-control" rows="14" required></textarea>
+                                    <div class="text-danger small" th:if="${#fields.hasErrors('htmlContent')}" th:errors="*{htmlContent}"></div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save-fill me-1"></i> Simpan Template
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" id="btnRefreshPreview">
+                                        <i class="bi bi-arrow-clockwise me-1"></i> Refresh Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white fw-semibold">
+                                <i class="bi bi-eye-fill me-1"></i> Preview Email
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <span class="text-muted small">Subject:</span>
+                                    <div id="previewSubject" class="fw-semibold"></div>
+                                </div>
+                                <hr>
+                                <div id="previewContent" class="preview-box p-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+<script th:src="@{/js/template.js}"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Upload CSV')}"></head>
+<body>
+
+<div class="app-wrapper">
+    <div th:replace="~{fragments/sidebar :: sidebar('upload-csv')}"></div>
+
+    <div class="main-content">
+        <div th:replace="~{fragments/navbar :: navbar('Upload Recipients CSV')}"></div>
+
+        <div class="container-fluid px-4">
+
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-1"></i> <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${warning}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle-fill me-1"></i> <span th:text="${warning}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white fw-semibold">
+                    <i class="bi bi-upload me-1"></i> Upload File recipients.csv
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/upload-csv}" method="post" enctype="multipart/form-data" class="row g-3 align-items-end">
+                        <div class="col-md-8">
+                            <label class="form-label">Pilih file CSV (format: nama,email)</label>
+                            <input type="file" name="file" class="form-control" accept=".csv" required>
+                        </div>
+                        <div class="col-md-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                <i class="bi bi-cloud-upload-fill me-1"></i> Upload
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="fw-semibold"><i class="bi bi-table me-1"></i> Preview Data Penerima</span>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-success-subtle text-success border">Valid: <span th:text="${totalValid}">0</span></span>
+                        <span class="badge bg-danger-subtle text-danger border">Tidak Valid: <span th:text="${totalInvalid}">0</span></span>
+                        <form th:action="@{/upload-csv/clear}" method="post" onsubmit="return confirm('Kosongkan seluruh daftar penerima?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash-fill"></i> Kosongkan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body p-0" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Validasi Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(recipients)}">
+                                <td colspan="4" class="text-center text-muted py-4">Belum ada data. Silakan upload file CSV.</td>
+                            </tr>
+                            <tr th:each="r, iter : ${recipients}" th:classappend="${!r.validEmail} ? 'table-danger' : ''">
+                                <td th:text="${iter.count}">1</td>
+                                <td th:text="${r.name}">Nama</td>
+                                <td th:text="${r.email}">email@domain.com</td>
+                                <td>
+                                    <span class="badge" th:classappend="${r.validEmail} ? 'bg-success' : 'bg-danger'"
+                                          th:text="${r.validEmail} ? 'Valid' : 'Tidak Valid'">Valid</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

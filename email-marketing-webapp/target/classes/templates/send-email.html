@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Kirim Email')}"></head>
+<body>
+
+<div class="app-wrapper">
+    <div th:replace="~{fragments/sidebar :: sidebar('kirim-email')}"></div>
+
+    <div class="main-content">
+        <div th:replace="~{fragments/navbar :: navbar('Kirim Email Massal')}"></div>
+
+        <div class="container-fluid px-4">
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <small class="text-muted">Total Penerima Valid</small>
+                        <h3 class="fw-bold text-primary mb-0" id="statTotal" th:text="${totalPenerimaValid}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <small class="text-muted">Template Aktif</small>
+                        <h6 class="fw-semibold mb-0 text-truncate" th:text="${templateSubject}">-</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <small class="text-muted">Status</small>
+                        <h6 class="fw-bold mb-0" id="statStatus">Siap Mengirim</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <label class="form-label">Delay Antar Email (milidetik)</label>
+                            <input type="number" id="delayInput" class="form-control" min="0" step="100"
+                                   th:value="${defaultDelay}">
+                        </div>
+                        <div class="col-md-4">
+                            <button id="btnKirim" class="btn btn-primary w-100" th:disabled="${totalPenerimaValid == 0}">
+                                <i class="bi bi-send-fill me-1"></i> Kirim Email
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="loadingIndicator" class="d-none text-center">
+                                <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                                <span class="text-muted">Mengirim email, mohon tunggu...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${totalPenerimaValid == 0}" class="alert alert-warning mt-3 mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                        Belum ada penerima valid. Silakan upload CSV terlebih dahulu di halaman
+                        <a th:href="@{/upload-csv}">Upload CSV</a>.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="fw-semibold">Progress Pengiriman</span>
+                        <span id="progressText">0 / 0 (0%)</span>
+                    </div>
+                    <div class="progress" style="height: 22px;">
+                        <div id="progressBar" class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                             role="progressbar" style="width: 0%">0%</div>
+                    </div>
+                    <div class="d-flex gap-3 mt-2 small">
+                        <span class="text-success"><i class="bi bi-check-circle-fill"></i> Berhasil: <span id="countSukses">0</span></span>
+                        <span class="text-danger"><i class="bi bi-x-circle-fill"></i> Gagal: <span id="countGagal">0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white fw-semibold">
+                    <i class="bi bi-list-check me-1"></i> Status Pengiriman Per Penerima
+                </div>
+                <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statusTableBody">
+                            <tr id="emptyRow">
+                                <td colspan="4" class="text-center text-muted py-4">Belum ada aktivitas pengiriman.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+<script th:src="@{/js/send-email.js}"></script>
+</body>
+</html>

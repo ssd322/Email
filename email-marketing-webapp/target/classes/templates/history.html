@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Riwayat Pengiriman')}"></head>
+<body>
+
+<div class="app-wrapper">
+    <div th:replace="~{fragments/sidebar :: sidebar('riwayat')}"></div>
+
+    <div class="main-content">
+        <div th:replace="~{fragments/navbar :: navbar('Riwayat Pengiriman')}"></div>
+
+        <div class="container-fluid px-4">
+
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-1"></i> <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <small class="text-muted">Total Sukses</small>
+                        <h3 class="fw-bold text-success mb-0" th:text="${totalSukses}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm text-center p-3">
+                        <small class="text-muted">Total Gagal</small>
+                        <h3 class="fw-bold text-danger mb-0" th:text="${totalGagal}">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold"><i class="bi bi-clock-history me-1"></i> Riwayat Pengiriman</span>
+                    <form th:action="@{/riwayat/hapus}" method="post" onsubmit="return confirm('Hapus seluruh riwayat pengiriman?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash-fill"></i> Hapus Riwayat
+                        </button>
+                    </form>
+                </div>
+                <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Email Tujuan</th>
+                                <th>Status</th>
+                                <th>Pesan Error</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(historyList)}">
+                                <td colspan="4" class="text-center text-muted py-4">Belum ada riwayat pengiriman.</td>
+                            </tr>
+                            <tr th:each="h : ${historyList}">
+                                <td th:text="${h.tanggalFormatted}">-</td>
+                                <td th:text="${h.emailTujuan}">-</td>
+                                <td>
+                                    <span class="badge" th:classappend="${h.status == 'SUKSES'} ? 'bg-success' : 'bg-danger'" th:text="${h.status}">-</span>
+                                </td>
+                                <td class="text-danger small" th:text="${h.pesanError ?: '-'}">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

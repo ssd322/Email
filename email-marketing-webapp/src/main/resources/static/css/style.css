@@ -1,0 +1,162 @@
+/* =========================================================
+   Email Marketing Web - Custom Stylesheet
+   Warna dominan: Biru, Putih, Abu-abu muda
+   ========================================================= */
+
+:root {
+    --primary-blue: #2563eb;
+    --primary-blue-dark: #1d4ed8;
+    --light-bg: #f3f5f9;
+    --sidebar-bg: #ffffff;
+    --border-light: #e5e9f0;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ---------- Layout ---------- */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1030;
+}
+
+.sidebar-brand {
+    color: var(--primary-blue);
+}
+
+.sidebar-link {
+    color: #4b5563;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 10px 14px;
+    transition: all 0.15s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background-color: #eef2ff;
+    color: var(--primary-blue);
+}
+
+.sidebar-link.active {
+    background-color: var(--primary-blue);
+    color: #fff !important;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-light);
+    padding: 0.9rem 0;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    border-radius: 14px;
+}
+
+.stat-card .stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--primary-blue-dark);
+    border-color: var(--primary-blue-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+/* ---------- Login Page ---------- */
+.login-body {
+    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+    min-height: 100vh;
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 18px;
+}
+
+/* ---------- Preview Template ---------- */
+.preview-box {
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background-color: #fafbfc;
+    min-height: 260px;
+}
+
+textarea#htmlContentInput {
+    font-family: "Courier New", monospace;
+    font-size: 0.85rem;
+}
+
+/* ---------- Table status kirim email ---------- */
+#statusTableBody tr.status-sent td {
+    color: #157347;
+}
+#statusTableBody tr.status-failed td {
+    color: #b02a37;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        height: 100vh;
+        transition: left 0.25s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.08);
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+}

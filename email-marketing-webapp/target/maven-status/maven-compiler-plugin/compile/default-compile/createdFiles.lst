@@ -1,0 +1,5 @@
+com\emailmarketing\config\AppConfig.class
+com\emailmarketing\config\WebMvcConfig.class
+com\emailmarketing\config\AsyncConfig.class
+com\emailmarketing\EmailMarketingApplication.class
+com\emailmarketing\config\LoginInterceptor.class
